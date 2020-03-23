@@ -65,11 +65,11 @@ public class ParamsConverter implements Elements {
 		
 		Integer result = 1;
 		
-		if (needTv) result *= TV;
-		if (needPr) result *= PROYECTOR;
-		if (needDb) result *= DIGITAL_BLACKBOARD;
-		if (needVc) result *= VIDEOCONFERENCE;
-		if (needWf) result *= WIFI;
+		if (needTv != null && needTv) result *= TV;
+		if (needPr != null && needPr) result *= PROYECTOR;
+		if (needDb != null && needDb) result *= DIGITAL_BLACKBOARD;
+		if (needVc != null && needVc) result *= VIDEOCONFERENCE;
+		if (needWf != null && needWf) result *= WIFI;
 		
 		return result;
 

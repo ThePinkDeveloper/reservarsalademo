@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thepinkdeveloper.bookingrooms.converters.ParamsConverter;
-import com.thepinkdeveloper.bookingrooms.models.RoomModel;
+import com.thepinkdeveloper.bookingrooms.models.AdvancedRoomModel;
 import com.thepinkdeveloper.bookingrooms.services.impl.BookServiceImpl;
 
 @RestController
 @RequestMapping("/book")
-public class BookARoomController {
+public class BookController {
 
 	@Autowired
 	@Qualifier("bookServiceImpl")
@@ -82,7 +82,7 @@ public class BookARoomController {
 			return "No se puede solicitar una hora de finalización anterior a la hora de comienzo";
 		}
 		
-		Map<Boolean, RoomModel> result = bookServiceImpl.bookARoom(dateOk, members, fromTimeOk, toTimeOk, elementsOk);
+		Map<Boolean, AdvancedRoomModel> result = bookServiceImpl.bookARoom(dateOk, members, fromTimeOk, toTimeOk, elementsOk);
 		if (result.containsKey(true)) {
 			return "La reserva se realizó satisfactoriamente en sala: " + result.get(true).getName() 
 					+ " - Código: " +  result.get(true).getCode();

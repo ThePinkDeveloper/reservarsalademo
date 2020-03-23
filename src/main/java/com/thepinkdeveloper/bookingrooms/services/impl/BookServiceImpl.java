@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import com.thepinkdeveloper.bookingrooms.converters.RoomConverter;
 import com.thepinkdeveloper.bookingrooms.entities.Book;
 import com.thepinkdeveloper.bookingrooms.entities.Room;
-import com.thepinkdeveloper.bookingrooms.models.RoomModel;
+import com.thepinkdeveloper.bookingrooms.models.AdvancedRoomModel;
 import com.thepinkdeveloper.bookingrooms.repositories.BookRepository;
 import com.thepinkdeveloper.bookingrooms.repositories.RoomRepository;
 import com.thepinkdeveloper.bookingrooms.services.BookService;
@@ -24,7 +24,7 @@ import com.thepinkdeveloper.bookingrooms.services.BookService;
 @Service("bookServiceImpl")
 public class BookServiceImpl implements BookService{
 	
-	private final Integer MAX_OCCUPANCY= 59; // de 7:00 a 22:00 
+	private final static Integer MAX_OCCUPANCY= 59; // de 7:00 a 22:00 
 	
 	@Autowired
 	@Qualifier("roomConverter")
@@ -44,11 +44,11 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public Map<Boolean, RoomModel> bookARoom(LocalDate date, Integer users, Integer fromHour, Integer toHour, Integer elements) {
-		Map<Boolean, RoomModel> hadSuccess = new HashMap<>();
-		hadSuccess.put(false, new RoomModel());
+	public Map<Boolean, AdvancedRoomModel> bookARoom(LocalDate date, Integer users, Integer fromHour, Integer toHour, Integer elements) {
+		Map<Boolean, AdvancedRoomModel> hadSuccess = new HashMap<>();
+		hadSuccess.put(false, new AdvancedRoomModel());
 		try {
-			List<RoomModel> bsmList = new ArrayList<>();
+			List<AdvancedRoomModel> bsmList = new ArrayList<>();
 			Set<Room> overlappingRooms = new HashSet<>();
 			List<Book> books = bookRepository.findByDateOrderByRoomAscFromHourAsc(date);
 			if (!books.isEmpty()) {
@@ -75,7 +75,7 @@ public class BookServiceImpl implements BookService{
 				    					bsm.getFreeOccupancy() - book.getToHour() + book.getFromHour());
 				    		});
 				    	} else {
-					    		RoomModel bsm = new RoomModel();
+					    		AdvancedRoomModel bsm = new AdvancedRoomModel();
 					    		bsm = roomConverter.entity2model(book.getRoom(), 
 					    				MAX_OCCUPANCY - book.getToHour() + book.getFromHour());
 					    		bsmList.add(bsm);
@@ -83,10 +83,10 @@ public class BookServiceImpl implements BookService{
 				    });
 				
 				if (!bsmList.isEmpty()) {
-					bsmList.sort(Comparator.comparing(RoomModel::getCapacity)
-							.thenComparing(RoomModel::getElements)
-							.thenComparing(RoomModel::getFreeOccupancy));
-					RoomModel result = bsmList.get(0);
+					bsmList.sort(Comparator.comparing(AdvancedRoomModel::getCapacity)
+							.thenComparing(AdvancedRoomModel::getElements)
+							.thenComparing(AdvancedRoomModel::getFreeOccupancy));
+					AdvancedRoomModel result = bsmList.get(0);
 					Book bookResult = new Book(date, fromHour, toHour, roomRepository.findByCode(result.getCode()));
 					hadSuccess.put(true, result);
 					bookRepository.save(bookResult);

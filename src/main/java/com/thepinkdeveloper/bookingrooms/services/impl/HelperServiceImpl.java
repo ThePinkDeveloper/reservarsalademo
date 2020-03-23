@@ -20,11 +20,11 @@ import com.thepinkdeveloper.bookingrooms.staticdata.RoomNames;
 @Service("helperServiceImpl")
 public class HelperServiceImpl implements HelperService, Elements {
 	
-	private final Integer MIN_CAPACITY = 2;
-	private final Integer MAX_CAPACITY = 20;
-	private final Integer DAYS_BOOKED = 15;
-	private final Integer MAX_VALUE_TO_BOOK = 12;
-	private final Integer NUMBER_OF_RANGES = 60; 
+	private final static Integer MIN_CAPACITY = 2;
+	private final static Integer MAX_CAPACITY = 20;
+	private final static Integer DAYS_BOOKED = 15;
+	private final static Integer MAX_VALUE_TO_BOOK = 12;
+	private final static Integer NUMBER_OF_RANGES = 60; 
 	
 	@Autowired
 	@Qualifier("roomRepository")

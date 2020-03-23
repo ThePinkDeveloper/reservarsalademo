@@ -6,6 +6,8 @@ import com.thepinkdeveloper.bookingrooms.entities.Room;
 
 public interface RoomService {
 	
+	public abstract Room findByCode(String code);
+	
 	public abstract List<Room> getAllRooms();
 	
 	public abstract boolean saveARoom(Room room);

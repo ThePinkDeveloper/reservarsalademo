@@ -2,6 +2,7 @@ package com.thepinkdeveloper.bookingrooms.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Room {
 	private Integer capacity;
 	private Integer elements;
 	
-	@OneToMany(mappedBy="room")
+	@OneToMany(mappedBy="room", cascade={CascadeType.REMOVE})
 	private List<Book> books;
 	
 	// Constructors
